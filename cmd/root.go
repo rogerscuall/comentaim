@@ -24,6 +24,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	git "github.com/go-git/go-git/v5"
@@ -64,7 +65,7 @@ to quickly create a Cobra application.`,
 			if err != nil {
 				break
 			}
-			fmt.Println(commit.Message)
+			fmt.Println(strings.Title(commit.Message))
 		}
 	},
 }
