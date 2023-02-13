@@ -26,6 +26,7 @@ import (
 	"os"
 	"strings"
 	"time"
+	"unicode"
 
 	git "github.com/go-git/go-git/v5"
 	"github.com/spf13/cobra"
@@ -65,9 +66,24 @@ to quickly create a Cobra application.`,
 			if err != nil {
 				break
 			}
-			fmt.Println(strings.Title(commit.Message))
+			fmt.Println(makeSentence(commit.Message))
 		}
 	},
+}
+
+func makeSentence(s string) string {
+	s = strings.TrimSpace(s)
+	if len(s) == 0 {
+		return ""
+	}
+	runes := []rune(s)
+	if !unicode.IsUpper(runes[0]) {
+		runes[0] = unicode.ToUpper(runes[0])
+	}
+	if runes[len(runes)-1] != '.' {
+		runes = append(runes, '.')
+	}
+	return string(runes)
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
